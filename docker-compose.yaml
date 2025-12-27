@@ -1,0 +1,12 @@
+services:
+  danmu-api:
+    image: logvar/danmu-api:latest
+    ports:
+      - "9321:9321"
+    # 热更新支持：挂载 config/.env 和 config/config.yaml 文件，修改后容器会自动重新加载配置（无需重启容器）
+    volumes:
+      - ./config:/app/config    # config目录下需要创建.env或config.yaml
+      - ./.chche:/app/.cache    # 配置.chche目录，会将缓存实时保存在本地文件
+    env_file:
+      - ./config/.env
+    restart: unless-stopped
